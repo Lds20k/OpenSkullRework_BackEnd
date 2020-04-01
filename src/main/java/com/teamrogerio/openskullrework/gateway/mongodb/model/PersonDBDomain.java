@@ -10,6 +10,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.util.List;
 
 @Document(collection = "person")
 @Data
@@ -23,6 +24,11 @@ public class PersonDBDomain {
     private String lastname;
     private String email;
     private String password;
+    private String birth;
+    private String institution;
+    private String image;
+    private String biography;
+    private List<String> courses;
     private ZoneId zonedId = ZoneId.of(AMERICA_SAO_PAULO);
-    private Instant dataDeCriacao = LocalDateTime.now().toInstant(OffsetDateTime.now().toLocalDateTime().atZone(zonedId).getOffset());
+    private Instant createdAt = LocalDateTime.now().toInstant(OffsetDateTime.now().toLocalDateTime().atZone(zonedId).getOffset());
 }
