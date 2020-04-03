@@ -19,5 +19,4 @@ public class PersonRequest {
     private String institution;
     private String image;
     private String biography;
-    private List<String> courses;
 }

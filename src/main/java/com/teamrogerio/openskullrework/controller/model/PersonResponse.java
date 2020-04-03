@@ -1,5 +1,6 @@
 package com.teamrogerio.openskullrework.controller.model;
 
+import com.teamrogerio.openskullrework.entities.PersonCourse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,5 +22,5 @@ public class PersonResponse {
     private String image;
     private String biography;
     private Instant createdAt;
-    private List<String> courses;
+    private List<PersonCourse> courses;
 }

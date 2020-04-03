@@ -10,6 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class Course {
+    private String id;
     private String creator;
     private String name;
     private String image;

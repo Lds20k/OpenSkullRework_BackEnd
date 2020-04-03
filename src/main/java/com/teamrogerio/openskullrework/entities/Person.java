@@ -10,6 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class Person {
+    private String id;
     private String name;
     private String lastname;
     private String email;
@@ -18,5 +19,5 @@ public class Person {
     private String institution;
     private String image;
     private String biography;
-    private List<String> courses;
+    private List<PersonCourse> courses;
 }
