@@ -5,15 +5,13 @@ import com.teamrogerio.openskullrework.controller.model.PersonRequest;
 import com.teamrogerio.openskullrework.controller.model.PersonResponse;
 import com.teamrogerio.openskullrework.controller.translator.Translator;
 import com.teamrogerio.openskullrework.entities.Person;
-import com.teamrogerio.openskullrework.usecase.AddCourseIntoPersonUseCase;
-import com.teamrogerio.openskullrework.usecase.CreateNewPersonUseCase;
-import com.teamrogerio.openskullrework.usecase.GetAllPersonUseCase;
-import com.teamrogerio.openskullrework.usecase.GetPersonByIdUseCase;
+import com.teamrogerio.openskullrework.usecase.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,6 +25,7 @@ public class PersonController {
     private final GetAllPersonUseCase getAllPersonUseCase;
     private final AddCourseIntoPersonUseCase addCourseIntoPersonUseCase;
     private final GetPersonByIdUseCase getPersonByIdUseCase;
+    private final SavePersonImageUseCase savePersonImageUseCase;
 
     //Insere
     @PostMapping
@@ -51,6 +50,12 @@ public class PersonController {
     //TODO: Retorna um jwt para login
 
     //TODO: Atualizar
+
+    //faz upload da foto de perfil
+    @PostMapping("/upload/{personId}")
+    public ResponseEntity<PersonResponse> postPersonImage(@PathVariable("personId") String personId, @RequestParam MultipartFile imageFile) throws ProblemsToUploadImageException, PersonDoesNotExistsException, FileIsNotCompatibleException {
+        return new ResponseEntity<>(savePersonImageUseCase.execute(personId, imageFile), HttpStatus.OK);
+    }
 
     //Adiciona um curso para o usuario
     @PostMapping("/{personId}/{courseId}")
