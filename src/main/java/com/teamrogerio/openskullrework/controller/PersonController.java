@@ -1,6 +1,7 @@
 package com.teamrogerio.openskullrework.controller;
 
 import com.teamrogerio.openskullrework.controller.exception.*;
+import com.teamrogerio.openskullrework.controller.model.ImageResponse;
 import com.teamrogerio.openskullrework.controller.model.PersonRequest;
 import com.teamrogerio.openskullrework.controller.model.PersonResponse;
 import com.teamrogerio.openskullrework.controller.translator.Translator;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -26,6 +28,7 @@ public class PersonController {
     private final AddCourseIntoPersonUseCase addCourseIntoPersonUseCase;
     private final GetPersonByIdUseCase getPersonByIdUseCase;
     private final SavePersonImageUseCase savePersonImageUseCase;
+    private final GetPersonImageUseCase getPersonImageUseCase;
 
     //Insere
     @PostMapping
@@ -35,7 +38,7 @@ public class PersonController {
 
     //Get todos
     @GetMapping
-    public ResponseEntity<List<PersonResponse>> getAllPerson(){
+    public ResponseEntity<List<PersonResponse>> getAllPerson() {
         return new ResponseEntity<>(getAllPersonUseCase.execute(), HttpStatus.OK);
     }
 
@@ -43,6 +46,12 @@ public class PersonController {
     @GetMapping("/{personId}")
     public ResponseEntity<PersonResponse> getPersonById(@PathVariable("personId") String personId) throws PersonDoesNotExistsException {
         return new ResponseEntity<>(getPersonByIdUseCase.execute(personId), HttpStatus.OK);
+    }
+
+    //retorna imagem
+    @GetMapping("/image/{personId}")
+    public ResponseEntity<ImageResponse> getUserImage(@PathVariable("personId") String personId) throws IOException, PersonDoesNotExistsException {
+        return new ResponseEntity<>(getPersonImageUseCase.execute(personId), HttpStatus.OK);
     }
 
     //TODO: Deleta um
