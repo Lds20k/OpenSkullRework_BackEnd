@@ -1,9 +1,6 @@
 package com.teamrogerio.openskullrework.controller.handler;
 
-import com.teamrogerio.openskullrework.controller.exception.CourseDoesNotExistsException;
-import com.teamrogerio.openskullrework.controller.exception.PersonAlreadyExistsException;
-import com.teamrogerio.openskullrework.controller.exception.PersonAlreadyHaveCourseException;
-import com.teamrogerio.openskullrework.controller.exception.PersonDoesNotExistsException;
+import com.teamrogerio.openskullrework.controller.exception.*;
 import com.teamrogerio.openskullrework.controller.model.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -34,6 +31,18 @@ public class CustomExceptionHandler {
     @ExceptionHandler({PersonAlreadyExistsException.class})
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorResponse handlePersonAlreadyExists(final PersonAlreadyExistsException e) {
+        return new ErrorResponse(e.getMessage());
+    }
+
+    @ExceptionHandler({ProblemsToUploadImageException.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleProblemsToUploadImage(final ProblemsToUploadImageException e) {
+        return new ErrorResponse(e.getMessage());
+    }
+
+    @ExceptionHandler({FileIsNotCompatibleException.class})
+    @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
+    public ErrorResponse handleFileNotCompatible(final FileIsNotCompatibleException e) {
         return new ErrorResponse(e.getMessage());
     }
 }
