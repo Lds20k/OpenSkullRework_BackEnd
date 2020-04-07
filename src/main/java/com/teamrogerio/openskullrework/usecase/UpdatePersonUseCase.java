@@ -39,6 +39,7 @@ public class UpdatePersonUseCase {
         updated.setImage(personDBDomainOptional.get().getImage());
         updated.setBiography(person.getBiography() != null ? person.getBiography() : personDBDomainOptional.get().getBiography());
         updated.setCourses(personDBDomainOptional.get().getCourses());
+        updated.setCreatedAt(personDBDomainOptional.get().getCreatedAt());
         if (person.getEmail() != null) {
             verifyIfEmailIsValidUseCase.execute(person.getEmail());
             verifyIfPersonAlreadyExistsByEmailUseCase.execute(person.getEmail());
