@@ -22,8 +22,12 @@ public class GetPersonImageUseCase {
     public ImageResponse execute(String personId) throws PersonDoesNotExistsException, IOException {
         Optional<PersonDBDomain> personDBDomainOptional = findPersonByIdGateway.execute(personId);
         if (!personDBDomainOptional.isPresent()) throw new PersonDoesNotExistsException("Person does not exists");
-
-        File file = new File(new File("public\\images\\user\\" + personDBDomainOptional.get().getImage()).getAbsolutePath());
+        File file;
+        if (personDBDomainOptional.get().getImage() != null) {
+            file = new File(new File("public\\images\\user\\" + personDBDomainOptional.get().getImage()).getAbsolutePath());
+        } else {
+            file = new File(new File("public\\images\\user\\default.png").getAbsolutePath());
+        }
 
         byte[] bytes = new byte[(int) file.length()];
         new FileInputStream(file).read(bytes);
