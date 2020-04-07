@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.util.List;
 
 @NoArgsConstructor
@@ -17,5 +18,6 @@ public class Course {
     private String time;
     private String description;
     private String price;
-    private List<String> modules;
+    private Instant createdAt;
+    private List<Module> modules;
 }
