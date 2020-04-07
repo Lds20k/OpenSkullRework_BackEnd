@@ -45,4 +45,10 @@ public class CustomExceptionHandler {
     public ErrorResponse handleFileNotCompatible(final FileIsNotCompatibleException e) {
         return new ErrorResponse(e.getMessage());
     }
+
+    @ExceptionHandler({EmailFormatIsNotValidException.class})
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ErrorResponse handleEmailNotValid(final EmailFormatIsNotValidException e) {
+        return new ErrorResponse(e.getMessage());
+    }
 }
