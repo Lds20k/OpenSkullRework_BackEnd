@@ -29,6 +29,7 @@ public class PersonController {
     private final GetPersonByIdUseCase getPersonByIdUseCase;
     private final SavePersonImageUseCase savePersonImageUseCase;
     private final GetPersonImageUseCase getPersonImageUseCase;
+    private final UpdatePersonUseCase updatePersonUseCase;
 
     //Insere
     @PostMapping
@@ -58,7 +59,11 @@ public class PersonController {
 
     //TODO: Retorna um jwt para login
 
-    //TODO: Atualizar
+    //atualiza dados
+    @PutMapping("/{personId}")
+    public ResponseEntity<PersonResponse> putPerson(@RequestBody PersonRequest personRequest, @PathVariable("personId") String personId) throws PersonDoesNotExistsException, EmailFormatIsNotValidException, PersonAlreadyExistsException {
+        return new ResponseEntity<>(updatePersonUseCase.execute(Translator.translate(personRequest, Person.class), personId), HttpStatus.OK);
+    }
 
     //faz upload da foto de perfil
     @PostMapping("/upload/{personId}")
