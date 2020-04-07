@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.util.List;
 
 @NoArgsConstructor
@@ -19,5 +20,6 @@ public class Person {
     private String institution;
     private String image;
     private String biography;
+    private Instant createdAt;
     private List<PersonCourse> courses;
 }
