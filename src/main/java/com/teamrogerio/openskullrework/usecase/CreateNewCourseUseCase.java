@@ -5,6 +5,7 @@ import com.teamrogerio.openskullrework.controller.model.CourseResponse;
 import com.teamrogerio.openskullrework.controller.translator.Translator;
 import com.teamrogerio.openskullrework.entities.Course;
 import com.teamrogerio.openskullrework.gateway.mongodb.repository.CreateNewCourseGateway;
+import com.teamrogerio.openskullrework.gateway.mongodb.repository.GetPersonByIdGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,12 +14,10 @@ import org.springframework.stereotype.Component;
 public class CreateNewCourseUseCase {
 
     private final CreateNewCourseGateway createNewCourseGateway;
-    private final VerifyIfPersonExistsUseCase verifyIfPersonExistsUseCase;
+    private final GetPersonByIdGateway getPersonByIdGateway;
 
     public CourseResponse execute(Course course) throws PersonDoesNotExistsException {
-        if(!verifyIfPersonExistsUseCase.execute(course.getCreator())){
-            throw new PersonDoesNotExistsException("Creator does not exists");
-        }
+        getPersonByIdGateway.execute(course.getCreator());
         return Translator.translate(createNewCourseGateway.execute(course), CourseResponse.class);
     }
 }
