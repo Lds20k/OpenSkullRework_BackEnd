@@ -10,13 +10,13 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Component
-public class VerifyIfPersonAlreadyExistsByEmailUseCase {
+public class VerifyIfEmailAlreadyExistsUseCase {
 
     private final FindPersonByEmailGateway findPersonByEmailGateway;
 
     public void execute(String email) throws PersonAlreadyExistsException {
         Optional<PersonDBDomain> personDBDomain = findPersonByEmailGateway.execute(email);
-        if(personDBDomain.isPresent()){
+        if (personDBDomain.isPresent()) {
             throw new PersonAlreadyExistsException("This email has already been registered");
         }
     }
