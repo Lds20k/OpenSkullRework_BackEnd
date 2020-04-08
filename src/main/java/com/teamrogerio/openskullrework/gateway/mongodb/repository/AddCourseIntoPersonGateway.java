@@ -1,10 +1,10 @@
 package com.teamrogerio.openskullrework.gateway.mongodb.repository;
 
 import com.teamrogerio.openskullrework.controller.exception.CourseDoesNotExistsException;
-import com.teamrogerio.openskullrework.controller.exception.PersonAlreadyHaveCourseException;
 import com.teamrogerio.openskullrework.controller.exception.PersonDoesNotExistsException;
-import com.teamrogerio.openskullrework.gateway.mongodb.model.PersonDBDomain;
+import com.teamrogerio.openskullrework.entities.Enrollment;
+import com.teamrogerio.openskullrework.gateway.mongodb.model.EnrollmentDBDomain;
 
 public interface AddCourseIntoPersonGateway {
-    PersonDBDomain execute(String personId, String courseId) throws PersonAlreadyHaveCourseException, CourseDoesNotExistsException, PersonDoesNotExistsException;
+    EnrollmentDBDomain execute(Enrollment enrollment) throws CourseDoesNotExistsException, PersonDoesNotExistsException;
 }
