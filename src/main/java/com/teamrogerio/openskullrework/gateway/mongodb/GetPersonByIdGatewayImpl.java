@@ -19,7 +19,7 @@ public class GetPersonByIdGatewayImpl implements GetPersonByIdGateway {
     public PersonDBDomain execute(String id) throws PersonDoesNotExistsException {
         Optional<PersonDBDomain> personDBDomain = personRepository.findById(id);
         if(!personDBDomain.isPresent()){
-            throw new PersonDoesNotExistsException("Person does not exists");
+            throw new PersonDoesNotExistsException("Person/creator does not exists");
         }
         return personDBDomain.get();
     }
