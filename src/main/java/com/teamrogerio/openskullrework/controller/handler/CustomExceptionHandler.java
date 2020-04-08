@@ -51,4 +51,10 @@ public class CustomExceptionHandler {
     public ErrorResponse handleEmailNotValid(final EmailFormatIsNotValidException e) {
         return new ErrorResponse(e.getMessage());
     }
+
+    @ExceptionHandler({CreatorCanNotSubscribeInYourOwnCourseException.class})
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleCreatorCantSubscribeInYourOwnCourse(final CreatorCanNotSubscribeInYourOwnCourseException e) {
+        return new ErrorResponse(e.getMessage());
+    }
 }
