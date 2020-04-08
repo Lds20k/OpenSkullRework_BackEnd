@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,5 +19,4 @@ public class CourseResponse {
     private String description;
     private String price;
     private Instant createdAt;
-    private List<String> modules;
 }
