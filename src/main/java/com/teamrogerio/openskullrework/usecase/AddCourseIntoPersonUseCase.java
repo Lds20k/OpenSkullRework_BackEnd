@@ -1,6 +1,7 @@
 package com.teamrogerio.openskullrework.usecase;
 
 import com.teamrogerio.openskullrework.controller.exception.CourseDoesNotExistsException;
+import com.teamrogerio.openskullrework.controller.exception.CreatorCanNotSubscribeInYourOwnCourseException;
 import com.teamrogerio.openskullrework.controller.exception.PersonDoesNotExistsException;
 import com.teamrogerio.openskullrework.controller.model.EnrollmentResponse;
 import com.teamrogerio.openskullrework.controller.translator.Translator;
@@ -20,10 +21,12 @@ public class AddCourseIntoPersonUseCase {
     private final AddCourseIntoPersonGateway addCourseIntoPersonGateway;
     private final GetCourseByIdGateway getCourseByIdGateway;
     private final GetPersonByIdGateway getPersonByIdGateway;
+    private final VerifyIfPersonIsCreatorOfCourseUseCase verifyIfPersonIsCreatorOfCourseUseCase;
 
-    public EnrollmentResponse execute(String personId, String courseId) throws CourseDoesNotExistsException, PersonDoesNotExistsException {
+    public EnrollmentResponse execute(String personId, String courseId) throws CourseDoesNotExistsException, PersonDoesNotExistsException, CreatorCanNotSubscribeInYourOwnCourseException {
         Course course = Translator.translate(getCourseByIdGateway.execute(courseId), Course.class);
         Person person = Translator.translate(getPersonByIdGateway.execute(personId), Person.class);
+        verifyIfPersonIsCreatorOfCourseUseCase.execute(course, person);
 
         Enrollment enrollment = new Enrollment();
         enrollment.setCourse(course);
