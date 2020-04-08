@@ -25,7 +25,6 @@ public class PersonController {
 
     private final CreateNewPersonUseCase createNewPersonUseCase;
     private final GetAllPersonUseCase getAllPersonUseCase;
-    private final AddCourseIntoPersonUseCase addCourseIntoPersonUseCase;
     private final GetPersonByIdUseCase getPersonByIdUseCase;
     private final SavePersonImageUseCase savePersonImageUseCase;
     private final GetPersonImageUseCase getPersonImageUseCase;
@@ -69,11 +68,5 @@ public class PersonController {
     @PostMapping("/upload/{personId}")
     public ResponseEntity<PersonResponse> postPersonImage(@PathVariable("personId") String personId, @RequestParam MultipartFile imageFile) throws ProblemsToUploadImageException, PersonDoesNotExistsException, FileIsNotCompatibleException {
         return new ResponseEntity<>(savePersonImageUseCase.execute(personId, imageFile), HttpStatus.OK);
-    }
-
-    //Adiciona um curso para o usuario
-    @PostMapping("/{personId}/{courseId}")
-    public ResponseEntity<PersonResponse> postPersonCourse(@PathVariable("personId") String personId, @PathVariable("courseId") String courseId) throws PersonAlreadyHaveCourseException, CourseDoesNotExistsException, PersonDoesNotExistsException {
-        return new ResponseEntity<>(addCourseIntoPersonUseCase.execute(personId, courseId), HttpStatus.OK);
     }
 }
