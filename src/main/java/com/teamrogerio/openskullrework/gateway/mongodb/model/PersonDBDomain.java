@@ -1,6 +1,5 @@
 package com.teamrogerio.openskullrework.gateway.mongodb.model;
 
-import com.teamrogerio.openskullrework.entities.PersonCourse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +10,6 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
-import java.util.List;
 
 @Document(collection = "person")
 @Data
@@ -29,7 +27,6 @@ public class PersonDBDomain {
     private String institution;
     private String image;
     private String biography;
-    private List<PersonCourse> courses;
     private ZoneId zonedId = ZoneId.of(AMERICA_SAO_PAULO);
     private Instant createdAt = LocalDateTime.now().toInstant(OffsetDateTime.now().toLocalDateTime().atZone(zonedId).getOffset());
 }
