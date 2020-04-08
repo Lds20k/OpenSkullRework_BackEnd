@@ -10,7 +10,6 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
-import java.util.List;
 
 @Document(collection = "course")
 @Data
@@ -26,7 +25,6 @@ public class CourseDBDomain {
     private String time;
     private String description;
     private String price;
-    private List<String> modules;
     private ZoneId zonedId = ZoneId.of(AMERICA_SAO_PAULO);
     private Instant createdAt = LocalDateTime.now().toInstant(OffsetDateTime.now().toLocalDateTime().atZone(zonedId).getOffset());
 }
