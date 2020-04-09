@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -50,7 +49,7 @@ public class PersonController {
 
     //retorna imagem
     @GetMapping("/image/{personId}")
-    public ResponseEntity<ImageResponse> getUserImage(@PathVariable("personId") String personId) throws IOException, PersonDoesNotExistsException {
+    public ResponseEntity<ImageResponse> getUserImage(@PathVariable("personId") String personId) throws PersonDoesNotExistsException, ProblemsToLoadImageException {
         return new ResponseEntity<>(getPersonImageUseCase.execute(personId), HttpStatus.OK);
     }
 

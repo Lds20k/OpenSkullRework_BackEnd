@@ -1,6 +1,7 @@
 package com.teamrogerio.openskullrework.usecase;
 
 import com.teamrogerio.openskullrework.controller.exception.PersonDoesNotExistsException;
+import com.teamrogerio.openskullrework.controller.exception.ProblemsToLoadImageException;
 import com.teamrogerio.openskullrework.controller.model.ImageResponse;
 import com.teamrogerio.openskullrework.gateway.mongodb.model.PersonDBDomain;
 import com.teamrogerio.openskullrework.gateway.mongodb.repository.GetPersonByIdGateway;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 
 @RequiredArgsConstructor
 @Component
@@ -18,7 +18,7 @@ public class GetPersonImageUseCase {
 
     private final GetPersonByIdGateway getPersonByIdGateway;
 
-    public ImageResponse execute(String personId) throws PersonDoesNotExistsException, IOException {
+    public ImageResponse execute(String personId) throws PersonDoesNotExistsException, ProblemsToLoadImageException {
         PersonDBDomain personDBDomain = getPersonByIdGateway.execute(personId);
         File file;
         if (personDBDomain.getImage() != null) {
@@ -28,7 +28,11 @@ public class GetPersonImageUseCase {
         }
 
         byte[] bytes = new byte[(int) file.length()];
-        new FileInputStream(file).read(bytes);
+        try {
+            new FileInputStream(file).read(bytes);
+        } catch (Exception e) {
+            throw new ProblemsToLoadImageException("Problem to load the image");
+        }
         return new ImageResponse(new String(Base64.encodeBase64(bytes)));
     }
 }
