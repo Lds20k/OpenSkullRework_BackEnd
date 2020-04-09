@@ -1,11 +1,9 @@
 package com.teamrogerio.openskullrework.controller;
 
-import com.teamrogerio.openskullrework.controller.exception.CourseDoesNotExistsException;
-import com.teamrogerio.openskullrework.controller.exception.FileIsNotCompatibleException;
-import com.teamrogerio.openskullrework.controller.exception.PersonDoesNotExistsException;
-import com.teamrogerio.openskullrework.controller.exception.ProblemsToUploadImageException;
+import com.teamrogerio.openskullrework.controller.exception.*;
 import com.teamrogerio.openskullrework.controller.model.CourseRequest;
 import com.teamrogerio.openskullrework.controller.model.CourseResponse;
+import com.teamrogerio.openskullrework.controller.model.ImageResponse;
 import com.teamrogerio.openskullrework.controller.translator.Translator;
 import com.teamrogerio.openskullrework.entities.Course;
 import com.teamrogerio.openskullrework.usecase.*;
@@ -29,6 +27,7 @@ public class CourseController {
     private final GetCourseByIdUseCase getCourseByIdUseCase;
     private final GetAllPersonCoursesUseCase getAllPersonCoursesUseCase;
     private final SaveCourseImageUseCase saveCourseImageUseCase;
+    private final GetCourseImageUseCase getCourseImageUseCase;
 
     //Insere
     @PostMapping
@@ -60,5 +59,11 @@ public class CourseController {
     @PostMapping("/upload/{courseId}")
     public ResponseEntity<CourseResponse> postCourseImage(@PathVariable("courseId") String courseId, @RequestParam MultipartFile imageFile) throws FileIsNotCompatibleException, ProblemsToUploadImageException, CourseDoesNotExistsException {
         return new ResponseEntity<>(saveCourseImageUseCase.execute(courseId, imageFile), HttpStatus.OK);
+    }
+
+    //retorna imagem
+    @GetMapping("/image/{courseId}")
+    public ResponseEntity<ImageResponse> getUserImage(@PathVariable("courseId") String courseId) throws ProblemsToLoadImageException, CourseDoesNotExistsException {
+        return new ResponseEntity<>(getCourseImageUseCase.execute(courseId), HttpStatus.OK);
     }
 }
