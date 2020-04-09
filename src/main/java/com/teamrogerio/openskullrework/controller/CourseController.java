@@ -1,20 +1,20 @@
 package com.teamrogerio.openskullrework.controller;
 
 import com.teamrogerio.openskullrework.controller.exception.CourseDoesNotExistsException;
+import com.teamrogerio.openskullrework.controller.exception.FileIsNotCompatibleException;
 import com.teamrogerio.openskullrework.controller.exception.PersonDoesNotExistsException;
+import com.teamrogerio.openskullrework.controller.exception.ProblemsToUploadImageException;
 import com.teamrogerio.openskullrework.controller.model.CourseRequest;
 import com.teamrogerio.openskullrework.controller.model.CourseResponse;
 import com.teamrogerio.openskullrework.controller.translator.Translator;
 import com.teamrogerio.openskullrework.entities.Course;
-import com.teamrogerio.openskullrework.usecase.CreateNewCourseUseCase;
-import com.teamrogerio.openskullrework.usecase.GetAllCoursesUseCase;
-import com.teamrogerio.openskullrework.usecase.GetAllPersonCoursesUseCase;
-import com.teamrogerio.openskullrework.usecase.GetCourseByIdUseCase;
+import com.teamrogerio.openskullrework.usecase.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -28,6 +28,7 @@ public class CourseController {
     private final GetAllCoursesUseCase getAllCoursesUseCase;
     private final GetCourseByIdUseCase getCourseByIdUseCase;
     private final GetAllPersonCoursesUseCase getAllPersonCoursesUseCase;
+    private final SaveCourseImageUseCase saveCourseImageUseCase;
 
     //Insere
     @PostMapping
@@ -54,5 +55,10 @@ public class CourseController {
     @GetMapping("/person/{personId}")
     public ResponseEntity<List<CourseResponse>> getPersonCourse(@PathVariable("personId") String personId) throws PersonDoesNotExistsException {
         return new ResponseEntity<>(getAllPersonCoursesUseCase.execute(personId), HttpStatus.OK);
+    }
+
+    @PostMapping("/upload/{courseId}")
+    public ResponseEntity<CourseResponse> postCourseImage(@PathVariable("courseId") String courseId, @RequestParam MultipartFile imageFile) throws FileIsNotCompatibleException, ProblemsToUploadImageException, CourseDoesNotExistsException {
+        return new ResponseEntity<>(saveCourseImageUseCase.execute(courseId, imageFile), HttpStatus.OK);
     }
 }
