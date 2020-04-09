@@ -8,6 +8,7 @@ import com.teamrogerio.openskullrework.controller.translator.Translator;
 import com.teamrogerio.openskullrework.entities.Course;
 import com.teamrogerio.openskullrework.usecase.CreateNewCourseUseCase;
 import com.teamrogerio.openskullrework.usecase.GetAllCoursesUseCase;
+import com.teamrogerio.openskullrework.usecase.GetAllPersonCoursesUseCase;
 import com.teamrogerio.openskullrework.usecase.GetCourseByIdUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,7 @@ public class CourseController {
     private final CreateNewCourseUseCase createNewCourseUseCase;
     private final GetAllCoursesUseCase getAllCoursesUseCase;
     private final GetCourseByIdUseCase getCourseByIdUseCase;
+    private final GetAllPersonCoursesUseCase getAllPersonCoursesUseCase;
 
     //Insere
     @PostMapping
@@ -49,4 +51,8 @@ public class CourseController {
 
     //TODO: Atualizar
 
+    @GetMapping("/person/{personId}")
+    public ResponseEntity<List<CourseResponse>> getPersonCourse(@PathVariable("personId") String personId) throws PersonDoesNotExistsException {
+        return new ResponseEntity<>(getAllPersonCoursesUseCase.execute(personId), HttpStatus.OK);
+    }
 }
