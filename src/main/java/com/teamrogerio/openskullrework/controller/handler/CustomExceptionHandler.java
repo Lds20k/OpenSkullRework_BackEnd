@@ -57,4 +57,10 @@ public class CustomExceptionHandler {
     public ErrorResponse handleCreatorCantSubscribeInYourOwnCourse(final CreatorCanNotSubscribeInYourOwnCourseException e) {
         return new ErrorResponse(e.getMessage());
     }
+
+    @ExceptionHandler({ProblemsToLoadImageException.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleProblemsToLoadImage(final ProblemsToLoadImageException e) {
+        return new ErrorResponse(e.getMessage());
+    }
 }
